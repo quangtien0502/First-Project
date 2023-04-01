@@ -24,26 +24,30 @@ const instance = axios.create({
 
 instance.interceptors.request.use(
     (config) => {
-    // Handle token here ...
-    //  const accessToken = getToken();
-    // config.headers['Accept-Language'] = getLanguage();
-  
-    //   if (accessToken) {
-    //     config.headers['Authorization'] = `Bearer ${accessToken}`;
-    //   }
-    //   return config;
+        // Handle token here ...
+        //  const accessToken = getToken();
+        // config.headers['Accept-Language'] = getLanguage();
+
+        //   if (accessToken) {
+        //     config.headers['Authorization'] = `Bearer ${accessToken}`;
+        //   }
+        //   return config;
     },
     (error) => {
-      // Do something with request error
-      return Promise.reject(error);
+        // Do something with request error
+        return Promise.reject(error);
     }
-  );
+);
 
 instance.interceptors.response.use(
     (response) => {
         // Thrown error for request with OK status code
-        const { data } = response;
-        
+        if (response && response.data) {
+            return response.data;
+        }
+
+        return response;
+
     },
     (error) => {
         console.log(error);
