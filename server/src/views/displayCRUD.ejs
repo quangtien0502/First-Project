@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Display CRUD</title>
+</head>
+<style>
+    table,
+    th,
+    td {
+        border: 1px solid black;
+        text-align: center;
+    }
+
+    .btn-edit {
+        background: orange;
+        cursor: pointer;
+        border: none;
+        border-radius: 3px;
+    }
+
+    .btn-delete {
+        background: red;
+        cursor: pointer;
+        border: none;
+
+        border-radius: 3px;
+    }
+</style>
+
+<body>
+    <table class="centre" style="width:100%">
+        <tr>
+            <th>id</th>
+            <th>first name</th>
+            <th>last name</th>
+            <th>email</th>
+            <th>Actions</th>
+        </tr>
+        <% for(var i=0; i < data.length; i++) { %>
+            <tr>
+                <td>
+                    <%= data[i].id %>
+                </td>
+                <td>
+                    <%= data[i].firstName %>
+                </td>
+                <td>
+                    <%= data[i].lastName %>
+                </td>
+                <td>
+                    <%= data[i].email %>
+                </td>
+                <td>
+                    <%= data[i].address %>
+                </td>
+                <td>
+                    <a href="/edit-crud?id= <%=data[i].id %>" class="btn-edit" type="button">Edit</a>
+                    <a href="/delete-crud?id= <%=data[i].id %>" class="btn-delete" type="button">Delete</a>
+                </td>
+
+            </tr>
+            <% } %>
+    </table>
+</body>
+
+</html>
