@@ -34,14 +34,33 @@ class Login extends Component {
     }
 
     handleLogin = async () => {
-        console.log("UserName: ", this.state.username, 'password: ', this.state.password)
-        console.log('all State', this.state)
+        //console.log("UserName: ", this.state.username, 'password: ', this.state.password)
+        //console.log('all State', this.state)
+        this.setState({
+            errMessage: ''
+        })
         try {
             let data = await handleLoginAPi(this.state.username, this.state.password)
-            console.log("tao la con cho " + data)
+            console.log('toi la con cho', data.userData)
+            if (data.userData && data.userData.errCode !== 0) {
+                this.setState({
+                    errMessage: data.userData.errMessage
+                })
+
+            }
+            if (data.userData && data.userData.errCode === 0) {
+                this.props.userLoginSuccess(data.userData.user)
+                console.log("xuat ra man hinh di")
+            }
 
         } catch (error) {
-            console.log(error.message)
+            if (error.response) {
+                if (error.response.data) {
+                    this.setState({
+                        errMessage: error.response.data.message
+                    })
+                }
+            }
 
 
 
@@ -122,8 +141,8 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
     return {
         navigate: (path) => dispatch(push(path)),
-        adminLoginSuccess: (adminInfo) => dispatch(actions.adminLoginSuccess(adminInfo)),
-        adminLoginFail: () => dispatch(actions.adminLoginFail()),
+        //userLoginFail: () => dispatch(actions.adminLoginFail()),
+        userLoginSuccess: (userInfor) => dispatch(actions.userLoginSuccess(userInfor))
     };
 };
 

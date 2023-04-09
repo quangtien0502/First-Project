@@ -23,14 +23,18 @@ let handleUserLogin = (email, password) => {
                 if (user) {
                     let checkPassword = await bcrypt.compare(password, user.password)
                     if (!checkPassword) {
-                        resolve("Your password is wrong")
+                        userData.errCode = 1;
+                        userData.errMessage = `Your password is wrong`
                     }
                     if (checkPassword) {
 
-                        userData = user
-                        delete userData.password
+
+
                         userData.errCode = 0
                         userData.errMessage = "Dm Dung roi"
+                        delete user.password
+                        userData.user = user
+
                         //resolve(userData)
 
                     }
